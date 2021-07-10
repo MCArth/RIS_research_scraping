@@ -1,0 +1,1 @@
+See (and modify) adbScraping.js for usage

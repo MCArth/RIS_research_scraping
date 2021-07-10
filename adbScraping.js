@@ -1,6 +1,11 @@
-const risScraper = require("./risScraper");
+const risScraper = require("./risScraper"); // don't edit
 
-const opts = {
+
+// You can edit the values of these options
+// If you aren't a programmer, make sure to remember that everything here (apart from waitForSelectorTimeout which is a number, and things that are null)
+// should have quotation marks (') on either side, like so: 'MyStringHere'
+// Also, every entry should have a comma at the end
+const options = {
 
 	// The URL of the search page from which to start searching
 	url: 'https://www.adb.org/search?page=1&facet_query=ola_collection_name%3Aevaluation_document%7CEvaluation%20Document&facet_query=sm_field_countries%24name%3APhilippines',
@@ -59,4 +64,4 @@ const opts = {
 	waitForSelectorTimeout: 5000, // If you are getting an error because the page is taking too long to load, you can increase this value (it is in milliseconds)
 }
 
-risScraper(opts)
+risScraper(options) // don't edit

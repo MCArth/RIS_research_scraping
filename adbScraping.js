@@ -1,4 +1,12 @@
-const risScraper = require("./risScraper"); // don't edit
+const { risScraper } = require("./risScraper"); // don't edit
+
+// Notes:
+// You can see another example in transportLinksScraping.js if needed
+//
+// Sometimes you may need to accept a cookie consent popup or similar on the webpage before the program will fully work
+// You should see a window pop up where you can do this (for example, this is the case for transportLinksScraping.js - you will see this if you run it)
+//
+// The program will automatically remove duplicates if there are any (i.e. where all fields that would be written to a RIS file are identical)
 
 
 // You can edit the values of these options
@@ -44,12 +52,16 @@ const options = {
 		// It's required so as to select and get information from each individual entry in the list
 		searchResultContainer: 'div[class~="ola-snippet-collection-evaluation_document"]',
 
-		// Selectors for fields that could exist on the search page. Set to null if the field does not exist on the search page
+		// Selectors for fields that could exist for each element on the search page. Set to null if the field does not exist on the search page
+		// These are expected to select a single element WITHIN each searchResultContainer
+		// For example, if each searchResultContainer has a div with classname adb-result-date containing the date the paper was published,
+		// searchResultDate should be 'div.adb-result-date
+		//
 		// All apart from searchResultLink should select elements that are the direct parent of the text you wish to read (aka the html element that wraps the text)
 		// searchResultLink must select an element which has a href attribute (this is what contains the link)
+		searchResultTitle: 'a[href] span',
 		searchResultDate: 'div[class~="ola-field-date"] span',
 		searchResultSeriesName: 'div[class~="ola-field-sm_field_series_names"] div[class~="ola-field-value"]',
-		searchResultTitle: 'a[href] span',
 		searchResultLink: 'a[href]', // you must be selecting an element with a href attribute
 		searchResultAuthor: null,
 

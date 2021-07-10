@@ -6,7 +6,7 @@ const writeRis = require('./JSONtoRIS')
 let opts
 let selectors
 const defaultSelectorTimeout = 5000
-module.exports = function risScraper(options) {
+module.exports.risScraper = function risScraper(options) {
     opts = options
     selectors = opts.selectors
     setupBrowser(opts);
@@ -31,6 +31,8 @@ async function setupBrowser(opts) {
     await addSpecificPageInfo(page, results)
 
     addTypeToResults(results, opts.risType)
+
+    removeDuplicates(results)
 
     if (opts.jsonFileName) {
         writeFile(`./${opts.jsonFileName}`, JSON.stringify(results), () => console.log("Done!"))
@@ -166,6 +168,23 @@ function addTypeToResults(results, type) {
         result.TY = type
     }
 }
+
+function removeDuplicates(results) {
+    const resultSet = new Set()
+    for (const result of results) {
+        resultSet.add(JSON.stringify(result))
+    }
+    const cachedLen = results.length
+    for (let i=0; i<cachedLen; i++) { // remove all elements (so nonduplicates can be re-added)
+        results.pop()
+    }
+
+    for (const nonDuplicate of resultSet) {
+        results.push(JSON.parse(nonDuplicate))
+    }
+}
+
+module.exports.removeDuplicates = removeDuplicates
 
 function addLoggingToPage(page) {
     page.on('console', message => console.log(message.text()))
